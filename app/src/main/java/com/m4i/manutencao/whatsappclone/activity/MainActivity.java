@@ -1,5 +1,6 @@
 package com.m4i.manutencao.whatsappclone.activity;
 
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -64,9 +65,12 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.Exit:
+            case R.id.menu_exit:
                 logOffUser();
                 finish();
+                break;
+            case R.id.menu_settings:
+                openSettingsActivity();
                 break;
         }
 
@@ -80,4 +84,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void openSettingsActivity() {
+        Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+        startActivity(intent);
+    }
+
 }

@@ -6,12 +6,34 @@
 
 package com.m4i.manutencao.whatsappclone.model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
+
 public class User {
+
+    private String userId;
     private String name;
     private String email;
     private String password;
 
     public User() {
+    }
+
+    public void save() {
+
+        DatabaseReference firebaseRef = FirebaseConfiguration.getFirebaseDatabase();
+        DatabaseReference currentUser = firebaseRef.child("users").child(getUserId());
+        currentUser.setValue(this);
+    }
+
+    @Exclude
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -30,6 +52,7 @@ public class User {
         this.email = email;
     }
 
+    @Exclude
     public String getPassword() {
         return password;
     }

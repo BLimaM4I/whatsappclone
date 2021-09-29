@@ -12,6 +12,7 @@ import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 
 public class User {
 
+    //Variables used
     private String userId;
     private String name;
     private String email;

@@ -1,24 +1,18 @@
 package com.m4i.manutencao.whatsappclone.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.*;
 import com.m4i.manutencao.whatsappclone.R;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 import com.m4i.manutencao.whatsappclone.helper.Base64Custom;
+import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
 import com.m4i.manutencao.whatsappclone.model.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -28,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
@@ -37,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void saveUserInFirebase(final User user) {
+
         fbAuth = FirebaseConfiguration.getFirebaseAuth();
         fbAuth.createUserWithEmailAndPassword(
                 user.getEmail(), user.getPassword()
@@ -44,15 +40,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this,"User registered successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                    FirebaseUserAccess.updateUserName(user.getName());
                     try {
                         String userIdIdentification = Base64Custom.encodeBase64(user.getEmail());
                         user.setUserId(userIdIdentification);
                         user.save();
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
-                    }
-                    finally {
+                    } finally {
                         finish();
                     }
                 } else {

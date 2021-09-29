@@ -17,9 +17,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageViewProfilePhoto"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:id="@+id/civProfilePhoto"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/standard_photo_24"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -32,6 +32,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/white"
         android:orientation="horizontal"
@@ -43,10 +45,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageViewProfilePhoto">
+        app:layout_constraintTop_toBottomOf="@+id/civProfilePhoto">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/etProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -55,7 +57,7 @@
             android:text="User Name" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/ivChangeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -65,17 +67,42 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:text="This name isn't your name of user neither your password. This nam will be visible to your contacts on Whatsapp Clone."
+        android:text="This name isn't your name of user neither your password. This name will be visible to your contacts on Whatsapp Clone."
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <ImageButton
+        android:id="@+id/ibCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/civProfilePhoto"
+        app:layout_constraintEnd_toStartOf="@+id/ibPhotoGallery"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/civProfilePhoto"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+
+    <ImageButton
+        android:id="@+id/ibPhotoGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/civProfilePhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibCamera"
+        app:layout_constraintTop_toTopOf="@+id/civProfilePhoto"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_baseline_photo_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "com.m4i.manutencao.whatsappclone"
         minSdkVersion 17
         targetSdkVersion 30
@@ -40,11 +41,15 @@ dependencies {
 
     //Firebase
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:28.3.0')
+    implementation platform('com.google.firebase:firebase-bom:28.4.1')
     // Declare the dependency for the Realtime Database library
-        implementation 'com.google.firebase:firebase-database:20.0.1'
+    implementation 'com.google.firebase:firebase-database'
     // Declare the dependency for the Firebase Authentication library
-        implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-auth'
+    // Declare the dependency for the Cloud Storage library
+    implementation 'com.google.firebase:firebase-storage'
+    // FirebaseUI Storage only
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 
     //Smart tabs
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'

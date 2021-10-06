@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
+import com.m4i.manutencao.whatsappclone.model.User;
 
 public class FirebaseUserAccess {
 
@@ -74,4 +75,17 @@ public class FirebaseUserAccess {
 
     }
 
+    public static User getDataFromLoggedUser() {
+        FirebaseUser firebaseUser = getActualUser();
+        User user = new User();
+        user.setEmail(firebaseUser.getEmail());
+        user.setName(firebaseUser.getDisplayName());
+
+        if (firebaseUser.getPhotoUrl() == null) {
+            user.setPhoto("");
+        } else {
+            user.setPhoto(firebaseUser.getPhotoUrl().toString());
+        }
+        return user;
+    }
 }

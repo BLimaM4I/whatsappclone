@@ -1,13 +1,11 @@
 package com.m4i.manutencao.whatsappclone.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -45,9 +43,9 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         throw task.getException();
                     } catch (FirebaseAuthInvalidUserException e) {
-                        exception = "The user is not registered";
+                        exception = "The user is not registered.";
                     } catch (FirebaseAuthInvalidCredentialsException e) {
-                        exception = "E-mail and password don't correspond to a registered user";
+                        exception = "E-mail and password don't correspond to a registered user.";
                     } catch (Exception e) {
                         exception = "Error on trying to register: " + e.getMessage();
                         e.printStackTrace();
@@ -74,10 +72,10 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(user);
 
             } else {
-                Toast.makeText(LoginActivity.this, "Please fill the password field", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Please fill the password field.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(LoginActivity.this, "Please fill the e-mail field", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Please fill the e-mail field.", Toast.LENGTH_SHORT).show();
         }
     }
 

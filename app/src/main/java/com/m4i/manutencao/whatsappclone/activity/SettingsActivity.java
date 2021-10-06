@@ -30,6 +30,7 @@ import com.m4i.manutencao.whatsappclone.R;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
 import com.m4i.manutencao.whatsappclone.helper.Permissions;
+import com.m4i.manutencao.whatsappclone.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -48,6 +49,7 @@ SettingsActivity extends AppCompatActivity {
     private ImageView ivChangeName;
     private StorageReference storageReference;
     private String userID;
+    private User userLogged;
     private ImageButton imageButtonCamera, getImageButtonPhotoGallery;
 
     //teste
@@ -59,6 +61,7 @@ SettingsActivity extends AppCompatActivity {
         //Initial settings
         storageReference = FirebaseConfiguration.getFirebaseStorage();
         userID = FirebaseUserAccess.getUserId();
+        userLogged = FirebaseUserAccess.getDataFromLoggedUser();
 
         //Validate permissions
         Permissions.validatePermissions(neededPermissions, this, 1);
@@ -67,7 +70,7 @@ SettingsActivity extends AppCompatActivity {
         imageButtonCamera = findViewById(R.id.ibCamera);
         getImageButtonPhotoGallery = findViewById(R.id.ibPhotoGallery);
 
-        //Photo the profile
+        //Profile Photo
         circleImageViewProfileImage = findViewById(R.id.civProfilePhoto);
 
         //Name of the profile
@@ -79,7 +82,8 @@ SettingsActivity extends AppCompatActivity {
         toolbar.setTitle("Settings");
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Show back arrow
+        //Show back arrow
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Recover data from user
         FirebaseUser user = FirebaseUserAccess.getActualUser();
@@ -130,7 +134,11 @@ SettingsActivity extends AppCompatActivity {
                 String name = etProfileName.getText().toString();
                 boolean returnValue = FirebaseUserAccess.updateUserName(name);
                 if (returnValue) {
-                    Toast.makeText(SettingsActivity.this, "Name changed successfully", Toast.LENGTH_SHORT).show();
+
+                    userLogged.setName(name);
+                    userLogged.update();
+
+                    Toast.makeText(SettingsActivity.this, "Name changed successfully.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -201,7 +209,13 @@ SettingsActivity extends AppCompatActivity {
     }
 
     public void updateUserPhoto(Uri url) {
-        FirebaseUserAccess.updateUserPhoto(url);
+        boolean returnedValue = FirebaseUserAccess.updateUserPhoto(url);
+        if (returnedValue) {
+            userLogged.setPhoto(url.toString());
+            userLogged.update();
+
+            Toast.makeText(this, "Your photo was changed successfully.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

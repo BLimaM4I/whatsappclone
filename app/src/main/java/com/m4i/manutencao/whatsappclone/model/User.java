@@ -9,6 +9,10 @@ package com.m4i.manutencao.whatsappclone.model;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
+import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
 
@@ -17,6 +21,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private String photo;
 
     public User() {
     }
@@ -26,6 +31,33 @@ public class User {
         DatabaseReference firebaseRef = FirebaseConfiguration.getFirebaseDatabase();
         DatabaseReference currentUser = firebaseRef.child("users").child(getUserId());
         currentUser.setValue(this);
+    }
+
+    public void update() {
+
+        String userIdentifier = FirebaseUserAccess.getUserId();
+        DatabaseReference database = FirebaseConfiguration.getFirebaseDatabase();
+        DatabaseReference userRef = database.child("users")
+                .child(userIdentifier);
+        Map<String, Object> usersValues = convertToMap();
+        userRef.updateChildren(usersValues);
+    }
+
+    @Exclude
+    public Map<String, Object> convertToMap() {
+        HashMap<String, Object> userMap = new HashMap<>();
+        userMap.put("email", getEmail());
+        userMap.put("name", getName());
+        userMap.put("photo", getPhoto());
+        return userMap;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Exclude

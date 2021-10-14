@@ -40,3 +40,4 @@ Thumbs.db
 /app/google-services.json
 .idea/sonarlint/
 /.idea/uiDesigner.xml
+/.idea/runConfigurations.xml

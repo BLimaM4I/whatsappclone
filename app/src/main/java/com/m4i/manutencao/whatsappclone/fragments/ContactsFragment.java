@@ -1,63 +1,93 @@
 package com.m4i.manutencao.whatsappclone.fragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.m4i.manutencao.whatsappclone.R;
+import com.m4i.manutencao.whatsappclone.adapter.ContactsAdapter;
+import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
+import com.m4i.manutencao.whatsappclone.model.User;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ContactsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class ContactsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private final ArrayList<User> contactsList = new ArrayList<>();
+    private DatabaseReference usersRef;
+    private ContactsAdapter contactsAdapter;
+    private RecyclerView rvContactsLists;
+    private ValueEventListener valueEventListenerContacts;
 
     public ContactsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ContactsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ContactsFragment newInstance(String param1, String param2) {
-        ContactsFragment fragment = new ContactsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        recoverContacts();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        usersRef.removeEventListener(valueEventListenerContacts);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contacts, container, false);
+        View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+
+        //initial configuration of recycler view
+        rvContactsLists = view.findViewById(R.id.fragment_contacts_recyclerView);
+
+        //Adapter config
+        contactsAdapter = new ContactsAdapter(contactsList, getActivity());
+        usersRef = FirebaseConfiguration.getFirebaseDatabase().child("users");
+
+        //recyclerView config
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+
+        rvContactsLists.setLayoutManager(layoutManager);
+        rvContactsLists.setHasFixedSize(true);
+        rvContactsLists.setAdapter(contactsAdapter);
+
+        return view;
+    }
+
+    public void recoverContacts() {
+
+        valueEventListenerContacts = usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    User user = data.getValue(User.class);
+                    contactsList.add(user);
+                }
+                contactsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

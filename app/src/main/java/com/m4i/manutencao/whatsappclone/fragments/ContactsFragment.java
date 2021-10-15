@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.m4i.manutencao.whatsappclone.R;
 import com.m4i.manutencao.whatsappclone.adapter.ContactsAdapter;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
+import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
 import com.m4i.manutencao.whatsappclone.model.User;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 public class ContactsFragment extends Fragment {
 
     private final ArrayList<User> contactsList = new ArrayList<>();
+    private FirebaseUser actualUser;
     private DatabaseReference usersRef;
     private ContactsAdapter contactsAdapter;
     private RecyclerView rvContactsLists;
@@ -61,6 +64,7 @@ public class ContactsFragment extends Fragment {
         //Adapter config
         contactsAdapter = new ContactsAdapter(contactsList, getActivity());
         usersRef = FirebaseConfiguration.getFirebaseDatabase().child("users");
+        actualUser = FirebaseUserAccess.getActualUser();
 
         //recyclerView config
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -78,8 +82,14 @@ public class ContactsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
+
                     User user = data.getValue(User.class);
-                    contactsList.add(user);
+
+                    String emailActualUSer = actualUser.getEmail();
+                    //If it is the current user logged to the app it shouldn't appear on contacts list
+                    if (!emailActualUSer.equals(user.getEmail())) {
+                        contactsList.add(user);
+                    }
                 }
                 contactsAdapter.notifyDataSetChanged();
             }

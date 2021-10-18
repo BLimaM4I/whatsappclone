@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.m4i.manutencao.whatsappclone.R;
+import com.m4i.manutencao.whatsappclone.activity.ChatActivity;
 import com.m4i.manutencao.whatsappclone.adapter.ContactsAdapter;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
@@ -83,7 +84,8 @@ public class ContactsFragment extends Fragment {
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent i = new Intent();
+                        Intent i = new Intent(getActivity(), ChatActivity.class);
+                        startActivity(i);
                     }
 
                     @Override

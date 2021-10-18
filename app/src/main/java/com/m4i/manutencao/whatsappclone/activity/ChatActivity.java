@@ -1,8 +1,10 @@
 package com.m4i.manutencao.whatsappclone.activity;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import com.m4i.manutencao.whatsappclone.R;
 
 public class ChatActivity extends AppCompatActivity {
@@ -14,6 +16,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //Toolbar config
         Toolbar toolbar = findViewById(R.id.chat_activity_toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

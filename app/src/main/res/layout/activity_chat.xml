@@ -6,28 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".activity.ChatActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/chat_activity_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:clickable="true"
-        android:contentDescription="@string/send_new_message"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_send" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/chat_activity_toolbar"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chat_activity_ciPhotoChat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/standard_photo_24" />
+
+        <TextView
+            android:id="@+id/chat_activity_tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bruno Lima"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="12dp" />
+
+    </androidx.appcompat.widget.Toolbar>
 </androidx.constraintlayout.widget.ConstraintLayout>

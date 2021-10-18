@@ -14,7 +14,14 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Toolbar" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Toolbar" parent="Theme.AppCompat.DayNight.NoActionBar"></style>
 
+    <style name="Theme.WhatsAppClone.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="Theme.WhatsAppClone.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.WhatsAppClone.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

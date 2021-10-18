@@ -1,9 +1,11 @@
 package com.m4i.manutencao.whatsappclone.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +19,7 @@ import com.m4i.manutencao.whatsappclone.R;
 import com.m4i.manutencao.whatsappclone.adapter.ContactsAdapter;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
+import com.m4i.manutencao.whatsappclone.helper.RecyclerItemClickListener;
 import com.m4i.manutencao.whatsappclone.model.User;
 
 import java.util.ArrayList;
@@ -72,6 +75,27 @@ public class ContactsFragment extends Fragment {
         rvContactsLists.setLayoutManager(layoutManager);
         rvContactsLists.setHasFixedSize(true);
         rvContactsLists.setAdapter(contactsAdapter);
+
+        //config recyclerview click event
+        rvContactsLists.addOnItemTouchListener(new RecyclerItemClickListener(
+                getActivity(),
+                rvContactsLists,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent i = new Intent();
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }));
 
         return view;
     }

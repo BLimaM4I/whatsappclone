@@ -13,4 +13,8 @@
     <color name="colorAccent">#25D366</color>
     <color name="light_gray">#EEEEEE</color>
 
+    <color name="ballon_sender">#dbf9c4</color>
+    <color name="ballon_receiver">#EEEEEE</color>
+
+
 </resources>

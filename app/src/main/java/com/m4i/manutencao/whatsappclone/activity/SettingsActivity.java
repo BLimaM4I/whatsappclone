@@ -49,7 +49,7 @@ SettingsActivity extends AppCompatActivity {
     private ImageView ivChangeName;
     private StorageReference storageReference;
     private String userID;
-    private User userLogged;
+    private User userLoggedIn;
     private ImageButton imageButtonCamera, getImageButtonPhotoGallery;
 
     //teste
@@ -61,7 +61,7 @@ SettingsActivity extends AppCompatActivity {
         //Initial settings
         storageReference = FirebaseConfiguration.getFirebaseStorage();
         userID = FirebaseUserAccess.getUserId();
-        userLogged = FirebaseUserAccess.getDataFromLoggedUser();
+        userLoggedIn = FirebaseUserAccess.getDataFromLoggedUser();
 
         //Validate permissions
         Permissions.validatePermissions(neededPermissions, this, 1);
@@ -135,8 +135,8 @@ SettingsActivity extends AppCompatActivity {
                 boolean returnValue = FirebaseUserAccess.updateUserName(name);
                 if (returnValue) {
 
-                    userLogged.setName(name);
-                    userLogged.update();
+                    userLoggedIn.setName(name);
+                    userLoggedIn.update();
 
                     Toast.makeText(SettingsActivity.this, "Name changed successfully.", Toast.LENGTH_SHORT).show();
                 }
@@ -211,8 +211,8 @@ SettingsActivity extends AppCompatActivity {
     public void updateUserPhoto(Uri url) {
         boolean returnedValue = FirebaseUserAccess.updateUserPhoto(url);
         if (returnedValue) {
-            userLogged.setPhoto(url.toString());
-            userLogged.update();
+            userLoggedIn.setPhoto(url.toString());
+            userLoggedIn.update();
 
             Toast.makeText(this, "Your photo was changed successfully.", Toast.LENGTH_SHORT).show();
         }

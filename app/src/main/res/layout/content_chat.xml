@@ -9,6 +9,7 @@
     tools:context=".activity.ChatActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/content_chat_rvMessages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
@@ -38,7 +39,7 @@
             android:paddingRight="16dp">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/content_chat_etSendMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,18 +48,19 @@
                 android:inputType="textPersonName" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/content_chat_ivCamera"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton2"
+            android:id="@+id/content_chat_fabSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:clickable="true"
+            android:onClick="sendMessage"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_baseline_send_white_24" />
     </LinearLayout>

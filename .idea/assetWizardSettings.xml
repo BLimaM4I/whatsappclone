@@ -28,7 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="send_message_icon" />
+                            <entry key="outputName" value="ic_baseline_send_white_24" />
                             <entry key="sourceFile" value="C:\dev\Android\Cursos\Udemy\WhatsAppClone" />
                           </map>
                         </option>

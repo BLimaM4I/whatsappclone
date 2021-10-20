@@ -11,10 +11,11 @@ import com.google.firebase.database.Exclude;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Serializable {
 
     //Variables used
     private String userId;

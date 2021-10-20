@@ -37,4 +37,14 @@
             tools:layout_editor_absoluteY="12dp" />
 
     </androidx.appcompat.widget.Toolbar>
+
+    <include
+        layout="@layout/content_chat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chat_activity_toolbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

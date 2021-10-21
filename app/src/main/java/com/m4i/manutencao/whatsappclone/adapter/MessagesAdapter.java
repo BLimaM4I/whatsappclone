@@ -54,7 +54,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
         if (photo != null) {
             Uri url = Uri.parse(photo);
             Glide.with(context).load(url).into(holder.photo);
-            //hide text
+            //Hide text
             holder.message.setVisibility(View.GONE);
         } else {
             holder.message.setText(msg);
@@ -89,5 +89,4 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
             photo = itemView.findViewById(R.id.adapter_messages_ivPhoto);
         }
     }
-
 }

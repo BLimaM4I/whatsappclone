@@ -118,6 +118,9 @@ public class ChatActivity extends AppCompatActivity {
 
             //Save message to receiver
             saveMessage(idUserSender, idUserReceiver, msg);
+            //Save message to sender
+            saveMessage(idUserReceiver, idUserSender, msg);
+
         } else {
             Toast.makeText(ChatActivity.this, "Please write a message to send!", Toast.LENGTH_SHORT).show();
         }
@@ -126,8 +129,10 @@ public class ChatActivity extends AppCompatActivity {
     private void saveMessage(String idSender, String idReceiver, Message msg) {
         DatabaseReference database = FirebaseConfiguration.getFirebaseDatabase();
         DatabaseReference msgRef = database.child("messages");
-        msgRef.child(idSender).child(idUserReceiver)
-                .push().setValue(msg);
+        msgRef.child(idSender)
+                .child(idReceiver)
+                .push()
+                .setValue(msg);
 
         //clean the message box
         sendMessage.setText("");

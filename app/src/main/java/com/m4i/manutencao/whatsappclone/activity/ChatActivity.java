@@ -33,6 +33,7 @@ import com.m4i.manutencao.whatsappclone.adapter.MessagesAdapter;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 import com.m4i.manutencao.whatsappclone.helper.Base64Custom;
 import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
+import com.m4i.manutencao.whatsappclone.model.Conversation;
 import com.m4i.manutencao.whatsappclone.model.Message;
 import com.m4i.manutencao.whatsappclone.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -216,12 +217,25 @@ public class ChatActivity extends AppCompatActivity {
 
             //Save message to receiver
             saveMessage(idUserSender, idUserReceiver, msg);
+
             //Save message to sender
             saveMessage(idUserReceiver, idUserSender, msg);
+
+            //save conversation
+            saveConversation(msg);
 
         } else {
             Toast.makeText(ChatActivity.this, "Please write a message to send!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void saveConversation(Message msg) {
+        Conversation conversationSender = new Conversation();
+        conversationSender.setIdSender(idUserSender);
+        conversationSender.setIdReceiver(idUserReceiver);
+        conversationSender.setLastMessage(msg.getMessage());
+        conversationSender.setUserLastMessage(userSelectedToSendMessage);
+        conversationSender.save();
     }
 
     private void saveMessage(String idSender, String idReceiver, Message msg) {

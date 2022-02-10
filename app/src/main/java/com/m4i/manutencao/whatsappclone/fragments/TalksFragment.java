@@ -1,9 +1,11 @@
 package com.m4i.manutencao.whatsappclone.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,9 +16,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.m4i.manutencao.whatsappclone.R;
+import com.m4i.manutencao.whatsappclone.activity.ChatActivity;
 import com.m4i.manutencao.whatsappclone.adapter.TalksAdapter;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
+import com.m4i.manutencao.whatsappclone.helper.RecyclerItemClickListener;
 import com.m4i.manutencao.whatsappclone.model.Conversation;
 
 import java.util.ArrayList;
@@ -50,6 +54,34 @@ public class TalksFragment extends Fragment {
         recyclerViewTalks.setLayoutManager(layoutManager);
         recyclerViewTalks.setHasFixedSize(true);
         recyclerViewTalks.setAdapter(adapter);
+
+        //Config Click Event on item
+        recyclerViewTalks.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getActivity(),
+                        recyclerViewTalks,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                                Conversation selectedConversation = listConversations.get(position);
+                                Intent i = new Intent(getActivity(), ChatActivity.class);
+                                i.putExtra("contactsChat", selectedConversation.getUserLastMessage());
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            }
+                        }
+                )
+        );
 
         //Config Conversations ref
         String userIdentifier = FirebaseUserAccess.getUserId();

@@ -15,7 +15,7 @@ public class Conversation {
 
     public void save() {
         DatabaseReference databaseReference = FirebaseConfiguration.getFirebaseDatabase();
-        DatabaseReference conversationReference = databaseReference.child("conversation");
+        DatabaseReference conversationReference = databaseReference.child("conversations");
         conversationReference.child(this.getIdSender())
                 .child(this.getIdReceiver())
                 .setValue(this);

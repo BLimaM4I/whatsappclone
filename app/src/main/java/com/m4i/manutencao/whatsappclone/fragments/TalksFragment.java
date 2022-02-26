@@ -95,7 +95,7 @@ public class TalksFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        recoverConversations();
+        receiveUpdatedConversationsFirebase();
     }
 
     @Override
@@ -104,7 +104,32 @@ public class TalksFragment extends Fragment {
         conversationsRef.removeEventListener(childEventListenerConversations);
     }
 
-    public void recoverConversations() {
+    public void searchConversations(String text) {
+//        Log.d("evento", text);
+        List<Conversation> listConversationsFiltered = new ArrayList<>();
+
+        for (Conversation conversation : listConversations) {
+            String name = conversation.getUserLastMessage().getName().toLowerCase();
+            String lastMessage = conversation.getLastMessage().toLowerCase();
+
+            if (name.contains(text) || lastMessage.contains(text)) {
+                listConversationsFiltered.add(conversation);
+            }
+        }
+
+        adapter = new TalksAdapter(listConversationsFiltered, getActivity());
+        recyclerViewTalks.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+    }
+
+    public void recoverAllConversation() {
+        adapter = new TalksAdapter(listConversations, getActivity());
+        recyclerViewTalks.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void receiveUpdatedConversationsFirebase() {
 
 
         childEventListenerConversations = conversationsRef.addChildEventListener(new ChildEventListener() {

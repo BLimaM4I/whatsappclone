@@ -1,14 +1,12 @@
 package com.m4i.manutencao.whatsappclone.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +14,7 @@ import com.m4i.manutencao.whatsappclone.R;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 import com.m4i.manutencao.whatsappclone.fragments.ContactsFragment;
 import com.m4i.manutencao.whatsappclone.fragments.TalksFragment;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -23,6 +22,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth fbAuth;
+    private MaterialSearchView materialSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
         //Firebase Authentication
         fbAuth = FirebaseConfiguration.getFirebaseAuth();
 
+
         //Toolbar
         Toolbar toolbar = findViewById(R.id.MainToolbar);
-        toolbar.setTitle("Whatsapp");
+        toolbar.setTitle("WhatsApp");
         setSupportActionBar(toolbar); //To support previous Android versions
 
         //Tabs configurations
@@ -51,12 +52,55 @@ public class MainActivity extends AppCompatActivity {
         SmartTabLayout viewPagerTab = findViewById(R.id.viewPagerTab);
         viewPagerTab.setViewPager(viewPager);
 
+        //Search View
+        materialSearchView = findViewById(R.id.materialSearchMain);
+
+        //Listener para search view
+        materialSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                TalksFragment talksFragment = (TalksFragment) adapter.getPage(0);
+                talksFragment.recoverAllConversation();
+            }
+        });
+
+        //Listener for query
+        materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(@NonNull String query) {
+//                Log.d("evento", "OnQueryTextSubmit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(@NonNull String newText) {
+//                Log.d("evento", "OnQueryTextChange");
+                TalksFragment talksFragment = (TalksFragment) adapter.getPage(0);
+//                position: 0 -> TalksFragment position: 1 -> ContactsFragment
+                if (!newText.isEmpty()) {
+                    talksFragment.searchConversations(newText.toLowerCase());
+                }
+                return true;
+            }
+        });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+
+        //Config search button
+        MenuItem item = menu.findItem(R.id.menuSearch);
+        materialSearchView.setMenuItem(item);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -86,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openSettingsActivity() {
-        Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
 

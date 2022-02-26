@@ -2,7 +2,7 @@
     <string name="app_name">WhatsAppClone</string>
     <string name="user_email">Please insert your e-mail</string>
     <string name="user_name">Please insert your name</string>
-    <string name="user_password">Please inset your password</string>
+    <string name="user_password">Please insert your password</string>
     <string name="btn_login">Log In</string>
     <string name="btn_register">Register</string>
     <string name="tv_doesnt_have_account">Don\'t have an account? Please register!</string>

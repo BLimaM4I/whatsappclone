@@ -17,7 +17,11 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.WhatsAppClone">
         <activity
-                android:name=".activity.GroupActivity">
+                android:name=".activity.RegisterGroupActivity"
+                android:exported="true"
+                android:label="@string/title_activity_register_group"
+                android:theme="@style/Theme.WhatsAppClone.NoActionBar"/>
+        <activity android:name=".activity.GroupActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".activity.MainActivity"/>

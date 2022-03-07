@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.m4i.manutencao.whatsappclone.R;
 import com.m4i.manutencao.whatsappclone.activity.ChatActivity;
+import com.m4i.manutencao.whatsappclone.activity.GroupActivity;
 import com.m4i.manutencao.whatsappclone.adapter.ContactsAdapter;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
@@ -79,27 +80,45 @@ public class ContactsFragment extends Fragment {
 
         //config recyclerview click event
         rvContactsLists.addOnItemTouchListener(new RecyclerItemClickListener(
-                getActivity(),
-                rvContactsLists,
-                new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        User userSelected = contactsList.get(position);
-                        Intent i = new Intent(getActivity(), ChatActivity.class);
-                        i.putExtra("contactsChat", userSelected);
-                        startActivity(i);
-                    }
+                        getActivity(),
+                        rvContactsLists,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                User userSelected = contactsList.get(position);
 
-                    @Override
-                    public void onLongItemClick(View view, int position) {
+                                boolean header = userSelected.getEmail().isEmpty();
 
-                    }
+                                if (header) {
+                                    Intent i = new Intent(getActivity(), GroupActivity.class);
+                                    startActivity(i);
 
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                } else {
+                                    Intent i = new Intent(getActivity(), ChatActivity.class);
+                                    i.putExtra("contactsChat", userSelected);
+                                    startActivity(i);
+                                }
 
-                    }
-                }));
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        }
+                )
+        );
+
+        //For a group we use an empty email field
+        User groupItem = new User();
+        groupItem.setName("New Group");
+        groupItem.setEmail("");
+        contactsList.add(groupItem);
 
         return view;
     }
@@ -113,9 +132,9 @@ public class ContactsFragment extends Fragment {
 
                     User user = data.getValue(User.class);
 
-                    String emailActualUSer = actualUser.getEmail();
+                    String emailActualUser = actualUser.getEmail();
                     //If it is the current user logged to the app it shouldn't appear on contacts list
-                    if (!emailActualUSer.equals(user.getEmail())) {
+                    if (!emailActualUser.equals(user.getEmail())) {
                         contactsList.add(user);
                     }
                 }

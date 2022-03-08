@@ -16,11 +16,16 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.WhatsAppClone">
-        <activity
-                android:name=".activity.RegisterGroupActivity"
-                android:exported="true"
-                android:label="@string/title_activity_register_group"
-                android:theme="@style/Theme.WhatsAppClone.NoActionBar"/>
+
+        <activity android:name=".activity.RegisterGroupActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activity.GroupActivity"/>
+            android:exported="true"
+            android:label="@string/title_activity_register_group"
+            android:theme="@style/Theme.WhatsAppClone.NoActionBar"
+        </activity>
+
         <activity android:name=".activity.GroupActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -29,6 +34,7 @@
             android:label="@string/title_activity_group"
             android:theme="@style/Theme.WhatsAppClone.NoActionBar"
         </activity>
+
         <activity
                 android:name=".activity.ChatActivity"
                 android:label="@string/title_activity_chat"

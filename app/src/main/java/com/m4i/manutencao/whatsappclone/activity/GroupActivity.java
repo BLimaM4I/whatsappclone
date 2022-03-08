@@ -1,5 +1,6 @@
 package com.m4i.manutencao.whatsappclone.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,7 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +23,7 @@ import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
 import com.m4i.manutencao.whatsappclone.helper.RecyclerItemClickListener;
 import com.m4i.manutencao.whatsappclone.model.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,8 @@ public class GroupActivity extends AppCompatActivity {
     private ValueEventListener valueEventListenerMembers;
     private DatabaseReference usersRef;
     private FirebaseUser actualUser;
-
     private Toolbar toolbar;
+    private FloatingActionButton fabNewGroup;
 
     public void updateMembersToolBar() {
         int totalSelected = listSelectedMembers.size();
@@ -54,20 +55,11 @@ public class GroupActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.activity_group_toolbar);
         toolbar.setTitle("New Group");
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.activity_group_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         //Initial config for recycler view
         rvMembers = findViewById(R.id.content_group_rvMembers);
         rvSelectedMembers = findViewById(R.id.content_group_rvSelectedMembers);
+        fabNewGroup = findViewById(R.id.activity_group_fab);
 
         usersRef = FirebaseConfiguration.getFirebaseDatabase().child("users");
         actualUser = FirebaseUserAccess.getActualUser();
@@ -156,6 +148,15 @@ public class GroupActivity extends AppCompatActivity {
                         }
                 )
         );
+
+        fabNewGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(GroupActivity.this, RegisterGroupActivity.class);
+                i.putExtra("members", (Serializable) listSelectedMembers);
+                startActivity(i);
+            }
+        });
 
     }
 

@@ -17,13 +17,13 @@
             <de.hdodenhof.circleimageview.CircleImageView android:layout_width="60dp"
                                                           android:layout_height="60dp"
                                                           android:src="@drawable/standard_photo_24"
-                                                          android:id="@+id/content_register_civGroupImage"/>
+                                                          android:id="@+id/content_register_group_civGroupImage"/>
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/content_register_etGroupName" android:layout_weight="1"
+                    android:id="@+id/content_register_group_etGroupName" android:layout_weight="1"
                     android:hint="Name of the group"/>
         </LinearLayout>
         <TextView
@@ -37,10 +37,10 @@
             android:layout_height="match_parent" android:padding="10dp">
         <TextView
                 android:text="Participants: 0"
-                android:layout_height="wrap_content" android:id="@+id/content_register_tvTotalParticipants"
+                android:layout_height="wrap_content" android:id="@+id/content_register_group_tvTotalParticipants"
                 android:textStyle="bold" android:textSize="18sp" android:layout_width="match_parent"/>
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/content_register_rvGroupsMembers"/>
+                android:layout_height="match_parent" android:id="@+id/content_register_group_rvGroupsMembers"/>
     </LinearLayout>
 </LinearLayout>

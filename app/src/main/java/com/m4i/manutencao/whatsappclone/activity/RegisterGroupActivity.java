@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -20,12 +21,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.m4i.manutencao.whatsappclone.R;
 import com.m4i.manutencao.whatsappclone.adapter.SelectedGroupAdapter;
 import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
+import com.m4i.manutencao.whatsappclone.helper.FirebaseUserAccess;
 import com.m4i.manutencao.whatsappclone.helper.RecyclerItemClickListener;
 import com.m4i.manutencao.whatsappclone.model.Group;
 import com.m4i.manutencao.whatsappclone.model.User;
@@ -46,6 +47,8 @@ public class RegisterGroupActivity extends AppCompatActivity {
     private CircleImageView civGroupImage;
     private StorageReference storageReference;
     private Group group;
+    private FloatingActionButton fabSaveGroup;
+    private EditText etGroupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,8 @@ public class RegisterGroupActivity extends AppCompatActivity {
         rvSelectedMembers = findViewById(R.id.content_register_group_rvGroupsMembers);
         civGroupImage = findViewById(R.id.content_register_group_civGroupImage);
         storageReference = FirebaseConfiguration.getFirebaseStorage();
+        fabSaveGroup = findViewById(R.id.register_group_activity_fab);
+        etGroupName = findViewById(R.id.content_register_group_etGroupName);
         group = new Group();
 
         //Config OnClick Listener
@@ -75,16 +80,6 @@ public class RegisterGroupActivity extends AppCompatActivity {
                 }
             }
         });
-
-        FloatingActionButton fab = findViewById(R.id.register_group_activity_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Recover the list of members received by intent
         if (getIntent().getExtras() != null) {
@@ -132,6 +127,24 @@ public class RegisterGroupActivity extends AppCompatActivity {
                         }
                 )
         );
+
+        //Config floating action button
+
+        fabSaveGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String groupName = etGroupName.getText().toString();
+                //Add to the list the user that is currently logged to the app
+                listSelectedMembers.add(FirebaseUserAccess.getDataFromLoggedUser());
+                group.setMembers(listSelectedMembers);
+                group.setName(groupName);
+                group.save();
+
+                Intent i = new Intent(RegisterGroupActivity.this, ChatActivity.class);
+                i.putExtra("groupChat", group);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

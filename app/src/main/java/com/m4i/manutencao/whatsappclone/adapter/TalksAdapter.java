@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.m4i.manutencao.whatsappclone.R;
 import com.m4i.manutencao.whatsappclone.model.Conversation;
+import com.m4i.manutencao.whatsappclone.model.Group;
 import com.m4i.manutencao.whatsappclone.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -39,15 +40,34 @@ public class TalksAdapter extends RecyclerView.Adapter<TalksAdapter.MyViewHolder
         Conversation conversation = conversations.get(position);
         holder.lastMessage.setText(conversation.getLastMessage());
 
-        User user = conversation.getUserLastMessage();
-        holder.name.setText(user.getName());
+        if (conversation.getIsGroup().equals("true")) {
 
-        if (user.getPhoto() != null) {
-            Uri uri = Uri.parse(user.getPhoto());
-            Glide.with(context).load(uri).into(holder.photo);
+            Group group = conversation.getGroup();
+            holder.name.setText(group.getName());
+
+            if (group.getPhoto() != null) {
+                Uri uri = Uri.parse(group.getPhoto());
+                Glide.with(context).load(uri).into(holder.photo);
+            } else {
+                holder.photo.setImageResource(R.drawable.standard_photo_24);
+            }
+
+
         } else {
-            holder.photo.setImageResource(R.drawable.standard_photo_24);
+            User user = conversation.getUserLastMessage();
+
+            if (user != null) {
+                holder.name.setText(user.getName());
+                if (user.getPhoto() != null) {
+                    Uri uri = Uri.parse(user.getPhoto());
+                    Glide.with(context).load(uri).into(holder.photo);
+                } else {
+                    holder.photo.setImageResource(R.drawable.standard_photo_24);
+                }
+            }
         }
+
+
     }
 
     @Override

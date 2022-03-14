@@ -9,8 +9,11 @@ public class Conversation {
     private String idReceiver;
     private String lastMessage;
     private User userLastMessage;
+    private String isGroup;
+    private Group group;
 
     public Conversation() {
+        this.setIsGroup("false");
     }
 
     public void save() {
@@ -19,6 +22,22 @@ public class Conversation {
         conversationReference.child(this.getIdSender())
                 .child(this.getIdReceiver())
                 .setValue(this);
+    }
+
+    public String getIsGroup() {
+        return isGroup;
+    }
+
+    public void setIsGroup(String isGroup) {
+        this.isGroup = isGroup;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public String getIdSender() {

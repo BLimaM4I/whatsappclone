@@ -265,7 +265,7 @@ public class ChatActivity extends AppCompatActivity {
                     Message message = new Message();
                     message.setIdUser(idUserLoggedGroup);
                     message.setMessage(messageTxt);
-                    message.setName(member.getName());
+                    message.setName(userSender.getName());
 
                     //Save message to member
                     saveMessage(idGroupSender, idUserRecipient, message);

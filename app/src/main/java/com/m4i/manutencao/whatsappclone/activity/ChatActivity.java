@@ -238,6 +238,7 @@ public class ChatActivity extends AppCompatActivity {
         if (!messageTxt.isEmpty()) {
 
             if (userRecipient != null) {
+
                 Message msg = new Message();
                 msg.setIdUser(idUserSender);
                 msg.setMessage(messageTxt);
@@ -253,6 +254,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 //save conversation in receiver
                 saveConversation(idUserRecipient, idUserSender, userSender, msg, false);
+
             } else {
 
                 for (User member : group.getMembers()) {
@@ -263,7 +265,7 @@ public class ChatActivity extends AppCompatActivity {
                     Message message = new Message();
                     message.setIdUser(idUserLoggedGroup);
                     message.setMessage(messageTxt);
-                    message.setIdUser(userSender.getName());
+                    message.setName(member.getName());
 
                     //Save message to member
                     saveMessage(idGroupSender, idUserRecipient, message);
@@ -295,7 +297,9 @@ public class ChatActivity extends AppCompatActivity {
             conversationSender.setUserLastMessage(userToShow);
             conversationSender.setIsGroup("false");
         }
+
         conversationSender.save();
+
     }
 
     private void saveMessage(String idSender, String idRecipient, Message msg) {

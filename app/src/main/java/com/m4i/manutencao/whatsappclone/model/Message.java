@@ -11,8 +11,18 @@ public class Message {
     private String idUser;
     private String message;
     private String Photo;
+    private String name;
 
     public Message() {
+        this.setName("");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getIdUser() {

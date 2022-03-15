@@ -47,17 +47,36 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
         Message message = messages.get(position);
         String msg = message.getMessage();
         String photo = message.getPhoto();
 
         if (photo != null) {
+
             Uri url = Uri.parse(photo);
             Glide.with(context).load(url).into(holder.photo);
+
+            String name = message.getName();
+            if (!name.isEmpty()) {
+                holder.name.setText(name);
+            } else {
+                holder.name.setVisibility(View.GONE);
+            }
+
             //Hide text
             holder.message.setVisibility(View.GONE);
         } else {
+
             holder.message.setText(msg);
+
+            String name = message.getName();
+            if (!name.isEmpty()) {
+                holder.name.setText(name);
+            } else {
+                holder.name.setVisibility(View.GONE);
+            }
+
             //Hide photo
             holder.photo.setVisibility(View.GONE);
         }
@@ -81,12 +100,15 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView message;
+        TextView name;
         ImageView photo;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+
             message = itemView.findViewById(R.id.adapter_messages_tvMessageTxt);
             photo = itemView.findViewById(R.id.adapter_messages_ivPhoto);
+            name = itemView.findViewById(R.id.adapter_messages_tvNameToShow);
         }
     }
 }

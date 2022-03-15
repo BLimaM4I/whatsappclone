@@ -117,11 +117,21 @@ public class TalksFragment extends Fragment {
         List<Conversation> listConversationsFiltered = new ArrayList<>();
 
         for (Conversation conversation : listConversations) {
-            String name = conversation.getUserLastMessage().getName().toLowerCase();
-            String lastMessage = conversation.getLastMessage().toLowerCase();
 
-            if (name.contains(text) || lastMessage.contains(text)) {
-                listConversationsFiltered.add(conversation);
+            if (conversation.getIsGroup().equals("false")) {
+                String name = conversation.getUserLastMessage().getName().toLowerCase();
+                String lastMessage = conversation.getLastMessage().toLowerCase();
+
+                if (name.contains(text) || lastMessage.contains(text)) {
+                    listConversationsFiltered.add(conversation);
+                }
+            } else {
+                String name = conversation.getGroup().getName().toLowerCase();
+                String lastMessage = conversation.getLastMessage().toLowerCase();
+
+                if (name.contains(text) || lastMessage.contains(text)) {
+                    listConversationsFiltered.add(conversation);
+                }
             }
         }
 

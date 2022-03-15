@@ -79,11 +79,26 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(@NonNull String newText) {
-//                Log.d("evento", "OnQueryTextChange");
-                TalksFragment talksFragment = (TalksFragment) adapter.getPage(0);
-//                position: 0 -> TalksFragment position: 1 -> ContactsFragment
-                if (!newText.isEmpty()) {
-                    talksFragment.searchConversations(newText.toLowerCase());
+                //position: 0 -> TalksFragment position: 1 -> ContactsFragment
+                //Checks if it is the conversations or contacts fragment
+                switch (viewPager.getCurrentItem()) {
+                    case 0:
+                        TalksFragment talksFragment = (TalksFragment) adapter.getPage(0);
+                        if (!newText.isEmpty()) {
+                            talksFragment.searchConversations(newText.toLowerCase());
+                        } else {
+                            talksFragment.recoverAllConversation();
+                        }
+
+                        break;
+                    case 1:
+                        ContactsFragment contactsFragment = (ContactsFragment) adapter.getPage(1);
+                        if (!newText.isEmpty()) {
+                            contactsFragment.searchContacts(newText.toLowerCase());
+                        } else {
+                            contactsFragment.recoverAllContacts();
+                        }
+                        break;
                 }
                 return true;
             }

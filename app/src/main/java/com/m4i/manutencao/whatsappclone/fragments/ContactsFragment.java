@@ -25,6 +25,7 @@ import com.m4i.manutencao.whatsappclone.helper.RecyclerItemClickListener;
 import com.m4i.manutencao.whatsappclone.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactsFragment extends Fragment {
 
@@ -85,7 +86,10 @@ public class ContactsFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                User userSelected = contactsList.get(position);
+
+                                List<User> listUsersUpdated = contactsAdapter.getContacts();
+
+                                User userSelected = listUsersUpdated.get(position);
 
                                 boolean header = userSelected.getEmail().isEmpty();
 
@@ -114,13 +118,17 @@ public class ContactsFragment extends Fragment {
                 )
         );
 
+        addNewGroupOption();
+
+        return view;
+    }
+
+    private void addNewGroupOption() {
         //For a group we use an empty email field
         User groupItem = new User();
         groupItem.setName("New Group");
         groupItem.setEmail("");
         contactsList.add(groupItem);
-
-        return view;
     }
 
     public void recoverContacts() {
@@ -128,6 +136,9 @@ public class ContactsFragment extends Fragment {
         valueEventListenerContacts = usersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                cleanContactsList();
+
                 for (DataSnapshot data : snapshot.getChildren()) {
 
                     User user = data.getValue(User.class);
@@ -147,4 +158,34 @@ public class ContactsFragment extends Fragment {
             }
         });
     }
+
+    public void cleanContactsList() {
+        contactsList.clear();
+        addNewGroupOption();
+
+    }
+
+    public void searchContacts(String text) {
+
+        List<User> listContactsFiltered = new ArrayList<>();
+
+        for (User user : contactsList) {
+            String name = user.getName().toLowerCase();
+            if (name.contains(text)) {
+                listContactsFiltered.add(user);
+            }
+        }
+
+        contactsAdapter = new ContactsAdapter(listContactsFiltered, getActivity());
+        rvContactsLists.setAdapter(contactsAdapter);
+        contactsAdapter.notifyDataSetChanged();
+
+    }
+
+    public void recoverAllContacts() {
+        contactsAdapter = new ContactsAdapter(contactsList, getActivity());
+        rvContactsLists.setAdapter(contactsAdapter);
+        contactsAdapter.notifyDataSetChanged();
+    }
+
 }

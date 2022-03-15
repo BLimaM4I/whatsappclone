@@ -202,20 +202,44 @@ public class ChatActivity extends AppCompatActivity {
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                             imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
-                                    Uri url = task.getResult();
-                                    Message msg = new Message();
-                                    msg.setIdUser(idUserSender);
-                                    msg.setMessage("image.jpeg");
-                                    msg.setPhoto(url.toString());
 
-                                    //Save photo in sender
-                                    saveMessage(idUserSender, idUserRecipient, msg);
+                                    if (userRecipient != null) {
+                                        Uri url = task.getResult();
+                                        Message msg = new Message();
+                                        msg.setIdUser(idUserSender);
+                                        msg.setMessage("image.jpeg");
+                                        msg.setPhoto(url.toString());
 
-                                    //Save photo in receiver
-                                    saveMessage(idUserRecipient, idUserSender, msg);
+                                        //Save photo in sender
+                                        saveMessage(idUserSender, idUserRecipient, msg);
+
+                                        //Save photo in receiver
+                                        saveMessage(idUserRecipient, idUserSender, msg);
+                                    } else {
+
+                                        for (User member : group.getMembers()) {
+
+                                            String idGroupSender = Base64Custom.encodeBase64(member.getEmail());
+                                            String idUserLoggedGroup = FirebaseUserAccess.getUserId();
+
+                                            Uri url = task.getResult();
+                                            Message message = new Message();
+                                            message.setIdUser(idUserLoggedGroup);
+                                            message.setMessage("image.jpeg");
+                                            message.setName(userSender.getName());
+                                            message.setPhoto(url.toString());
+
+                                            //Save message to member
+                                            saveMessage(idGroupSender, idUserRecipient, message);
+
+                                            //Save conversation
+                                            saveConversation(idGroupSender, idUserRecipient, userRecipient, message, true);
+                                        }
+                                    }
 
                                     Toast.makeText(ChatActivity.this, "Success in sending to Firebase the photo", Toast.LENGTH_SHORT).show();
 
@@ -328,6 +352,9 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void recoverMessages() {
+
+        messages.clear();
+
         childEventListenerMessages = messagesRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

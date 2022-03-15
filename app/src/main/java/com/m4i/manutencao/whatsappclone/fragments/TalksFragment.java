@@ -64,7 +64,8 @@ public class TalksFragment extends Fragment {
                             @Override
                             public void onItemClick(View view, int position) {
 
-                                Conversation selectedConversation = listConversations.get(position);
+                                List<Conversation> listUpdatedConversations = adapter.getConversations();
+                                Conversation selectedConversation = listUpdatedConversations.get(position);
 
                                 if (selectedConversation.getIsGroup().equals("true")) {
                                     Intent i = new Intent(getActivity(), ChatActivity.class);
@@ -149,6 +150,7 @@ public class TalksFragment extends Fragment {
 
     public void receiveUpdatedConversationsFirebase() {
 
+        listConversations.clear();
 
         childEventListenerConversations = conversationsRef.addChildEventListener(new ChildEventListener() {
             @Override

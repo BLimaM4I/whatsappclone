@@ -108,6 +108,6 @@
             android:layout_height="wrap_content" android:id="@+id/textView4"
             app:layout_constraintBottom_toBottomOf="@+id/textView" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/textView"
-            app:layout_constraintHorizontal_chainStyle="packed" android:layout_marginEnd="4dp"
-            android:textAlignment="center"/>
+            app:layout_constraintHorizontal_chainStyle="packed" android:layout_marginEnd="1dp"
+            android:textAlignment="center" app:layout_constraintTop_toTopOf="@+id/textView"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

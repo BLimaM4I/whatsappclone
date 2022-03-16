@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             talksFragment.recoverAllConversation();
                         }
-
                         break;
                     case 1:
                         ContactsFragment contactsFragment = (ContactsFragment) adapter.getPage(1);
@@ -103,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
     @Override

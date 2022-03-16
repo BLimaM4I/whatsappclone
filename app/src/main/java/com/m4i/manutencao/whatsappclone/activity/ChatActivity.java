@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -81,7 +80,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //initial settings
         tvName = findViewById(R.id.chat_activity_tvName);
-        civPhoto = findViewById(R.id.chat_activity_ciPhotoChat);
+        civPhoto = findViewById(R.id.chat_activity_civPhotoChat);
         sendMessage = findViewById(R.id.content_chat_etSendMessage);
         ivCamera = findViewById(R.id.content_chat_ivCamera);
 
@@ -196,7 +195,6 @@ public class ChatActivity extends AppCompatActivity {
                     uploadtask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("Error", "Erro in uploading the photo to Firebase");
                             Toast.makeText(ChatActivity.this, "Error in uploading photo to Firebase!", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -241,7 +239,7 @@ public class ChatActivity extends AppCompatActivity {
                                         }
                                     }
 
-                                    Toast.makeText(ChatActivity.this, "Success in sending to Firebase the photo", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ChatActivity.this, "Success in sending the photo to Firebase", Toast.LENGTH_SHORT).show();
 
                                 }
                             });
@@ -309,7 +307,7 @@ public class ChatActivity extends AppCompatActivity {
 
         Conversation conversationSender = new Conversation();
         conversationSender.setIdSender(idSender);
-        conversationSender.setIdReceiver(idRecipient);
+        conversationSender.setIdRecipient(idRecipient);
         conversationSender.setLastMessage(msg.getMessage());
 
         if (isGroup) {

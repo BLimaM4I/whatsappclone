@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.ChatActivity">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".activity.ChatActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/chat_activity_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/colorPrimaryDark"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/white">
+            android:id="@+id/chat_activity_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimaryDark"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/chat_activity_ciPhotoChat"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/standard_photo_24" />
+                android:id="@+id/chat_activity_civPhotoChat"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/standard_photo_24"/>
 
         <TextView
-            android:id="@+id/chat_activity_tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bruno Lima"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="56dp"
-            tools:layout_editor_absoluteY="12dp" />
+                android:id="@+id/chat_activity_tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bruno Lima"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="56dp"
+                tools:layout_editor_absoluteY="12dp"/>
 
     </androidx.appcompat.widget.Toolbar>
 
     <include
-        layout="@layout/content_chat"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat_activity_toolbar" />
+            layout="@layout/content_chat"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chat_activity_toolbar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

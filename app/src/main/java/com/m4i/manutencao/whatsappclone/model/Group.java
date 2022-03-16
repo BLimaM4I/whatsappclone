@@ -67,17 +67,15 @@ public class Group implements Serializable {
         for (User member : getMembers()) {
 
             String idSender = Base64Custom.encodeBase64(member.getEmail());
-            String idReceiver = getId();
+            String idRecipient = getId();
 
             Conversation conversation = new Conversation();
             conversation.setIdSender(idSender);
-            conversation.setIdReceiver(idReceiver);
+            conversation.setIdRecipient(idRecipient);
             conversation.setLastMessage("");
             conversation.setIsGroup("true");
             conversation.setGroup(this);
             conversation.save();
-
-
         }
     }
 }

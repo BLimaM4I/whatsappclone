@@ -6,7 +6,7 @@ import com.m4i.manutencao.whatsappclone.config.FirebaseConfiguration;
 public class Conversation {
 
     private String idSender;
-    private String idReceiver;
+    private String idRecipient;
     private String lastMessage;
     private User userLastMessage;
     private String isGroup;
@@ -20,7 +20,7 @@ public class Conversation {
         DatabaseReference databaseReference = FirebaseConfiguration.getFirebaseDatabase();
         DatabaseReference conversationReference = databaseReference.child("conversations");
         conversationReference.child(this.getIdSender())
-                .child(this.getIdReceiver())
+                .child(this.getIdRecipient())
                 .setValue(this);
     }
 
@@ -48,12 +48,12 @@ public class Conversation {
         this.idSender = idSender;
     }
 
-    public String getIdReceiver() {
-        return idReceiver;
+    public String getIdRecipient() {
+        return idRecipient;
     }
 
-    public void setIdReceiver(String idReceiver) {
-        this.idReceiver = idReceiver;
+    public void setIdRecipient(String idRecipient) {
+        this.idRecipient = idRecipient;
     }
 
     public String getLastMessage() {
